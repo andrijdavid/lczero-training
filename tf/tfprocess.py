@@ -15,16 +15,15 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with Leela Zero.  If not, see <http://www.gnu.org/licenses/>.
-
-import numpy as np
+import bisect
 import os
 import random
-import tensorflow as tf
 import time
-import bisect
-import lc0_az_policy_map
-import proto.net_pb2 as pb
 
+import lc0_az_policy_map
+import numpy as np
+import proto.net_pb2 as pb
+import tensorflow as tf
 from net import Net
 
 
