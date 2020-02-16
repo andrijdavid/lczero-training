@@ -25,7 +25,7 @@ import numpy as np
 import proto.net_pb2 as pb
 import tensorflow as tf
 from net import Net
-
+from adamod import AdaMod
 
 class ApplySqueezeExcitation(tf.keras.layers.Layer):
     def __init__(self, **kwargs):
@@ -171,8 +171,7 @@ class TFProcess:
 
 
         self.active_lr = 0.01
-        self.optimizer = tf.keras.optimizers.SGD(
-            learning_rate=lambda: self.active_lr, momentum=0.9, nesterov=True)
+        self.optimizer = AdaMod(learning_rate=lambda: self.active_lr)
         self.orig_optimizer = self.optimizer
         if self.loss_scale != 1:
             self.optimizer = tf.keras.mixed_precision.experimental.LossScaleOptimizer(
