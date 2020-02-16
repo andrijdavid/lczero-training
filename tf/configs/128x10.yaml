@@ -1,0 +1,48 @@
+%YAML 1.2 
+---
+name: 'elnino-128x10'                       # ideally no spaces
+gpu: 0                                 # gpu id to process on
+
+dataset:
+  num_chunks: 4467                   # newest nof chunks to parse
+  train_ratio: 0.90                    # trainingset ratio
+  # For separated test and train data.
+  #input_train: '/path/to/chunks/*/draw/' # supports glob
+  #input_test: '/path/to/chunks/*/draw/'  # supports glob
+  # For a one-shot run with all data in one directory.
+  input: 'supervised-*/'
+
+training:
+  swa: true
+  swa_output: true
+  swa_steps: 25
+  swa_max_n: 10
+  mask_legal_moves: true
+  renorm: true
+  renorm_max_r: 1.0
+  renorm_max_d: 0.0
+  q_ratio: 0.2
+  max_grad_norm: 2.0
+  batch_size: 4160                   # training batch
+  num_batch_splits: 13
+  test_steps: 125                    # eval test set values after this many steps
+  num_test_positions: 80000
+  train_avg_report_steps: 25        # training reports its average values after this many steps.
+  total_steps: 250                  # terminate after these steps
+  warmup_steps: 125
+  checkpoint_steps: 1000          # optional frequency for checkpointing before finish
+  shuffle_size: 500000               # size of the shuffle buffer
+  lr_values:                         # list of learning rates
+      - 0.015
+      - 0.015
+  lr_boundaries:                     # list of boundaries
+      - 100
+  policy_loss_weight: 1.0            # weight of policy loss
+  value_loss_weight: 0.5            # weight of value loss
+  path: 'networks'    # network storage dir
+
+model:
+  filters: 128
+  residual_blocks: 10
+  se_ratio: 4
+...
